@@ -1,0 +1,17 @@
+# Sub-repos — each has its own remote and lifecycle
+allura-memory/
+allura-plugins/
+Agent-Harnesses/
+nanoclaw-v2/
+allura module/
+websites/
+.github-public/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~

@@ -1,0 +1,39 @@
+# Allura Team Manifest — Team Durham (platform deployment)
+# Schema: ADR-002. Org tenancy: ADR-001. Brand-production division.
+# Repo: https://github.com/Allura-Ecosystem/team-durham
+apiVersion: allura/v1
+kind: Team
+metadata:
+  name: team-durham
+  organization: allura-system
+  division: brand-production
+brain:
+  read:
+    - allura-system
+  write:
+    - allura-system
+governance:
+  curator: bahari
+  promotion: hitl
+pipeline:                           # Team Durham's 9-phase brand + design workflow (gated)
+  - intake                          # Phase 0: Kotler locks STP, produces Ralph objective
+  - strategy                        # Phase 1: Aaker (+ Ogilvy, Rand attend)
+  - naming                          # Phase 2: Aaker + Ogilvy
+  - visual-direction                # Phase 3: Glaser (living brief, not static guide)
+  - design-system                   # Phase 4: Rand (constitutional + application) + Ogilvy (copy standards)
+  - web-app                         # Phase 5: Mizko (Ralph loop, Glaser-governed)
+  - qa                              # Phase 6: Munari + UX Persona Panel + Tufte benchmarks
+  - memory                          # Phase 7: Kotler stores Brand Truth
+  - delivery                        # Phase 8: Kotler presents to client
+agents:
+  - kotler        # CEO + orchestrator (STP gate, intake, Ralph objectives, final review)
+  - aaker         # brand strategist (strategy, positioning, brand-truth.json)
+  - ogilvy        # copywriter (voice architecture, naming, copy standards)
+  - glaser        # visual director (logo, palette, typography, living brief)
+  - rand          # design system builder (constitutional + application layers)
+  - mizko         # web & app UI designer (screens, responsive, conversion)
+  - munari        # QA reviewer (read-only; consistency, a11y, interaction, copy gate)
+  - tufte         # data analyst (competitive intelligence, performance benchmarks)
+  - scout         # recon (read-only discovery)
+ui:
+  icon: durham

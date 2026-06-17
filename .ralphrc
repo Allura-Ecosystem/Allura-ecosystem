@@ -1,0 +1,21 @@
+# Ralph Configuration — Allura Ecosystem
+
+# Agent: opencode (default)
+# Model: determined by opencode config
+
+# Completion promise
+COMPLETION_PROMISE="COMPLETE"
+ABORT_PROMISE="ABORT"
+
+# Max iterations
+MAX_ITERATIONS=10
+MIN_ITERATIONS=3
+
+# Rate limiting
+MAX_CALLS_PER_HOUR=60
+
+# Allowed tools (Allura governance)
+ALLOWED_TOOLS="Edit Write Read Bash Grep Glob MCP_DOCKER_notion-fetch MCP_DOCKER_notion-search MCP_DOCKER_notion-create-pages allura-brain_memory_add allura-brain_memory_search allura-brain_memory_get allura-brain_memory_list allura-brain_audit_query_events allura-brain_governance_check_gate"
+
+# Project-specific
+RALPH_PROJECT_NAME="Allura Ecosystem"

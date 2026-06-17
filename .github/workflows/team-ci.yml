@@ -1,0 +1,59 @@
+name: Team CI — Validate & Package
+
+on:
+  push:
+    paths:
+      - 'factory/teams/**'
+      - 'factory/templates/**'
+      - 'factory/validate.sh'
+  pull_request:
+    paths:
+      - 'factory/teams/**'
+  workflow_dispatch:
+    inputs:
+      team:
+        description: 'Team directory to validate (e.g., penasoto)'
+        required: true
+        type: string
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate team module
+        run: |
+          TEAM="${{ github.event.inputs.team }}"
+          if [ -z "$TEAM" ]; then
+            for dir in factory/teams/*/; do
+              bash factory/validate.sh "$dir"
+            done
+          else
+            bash factory/validate.sh "factory/teams/$TEAM"
+          fi
+
+  package:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Package team module
+        run: |
+          TEAM="${{ github.event.inputs.team }}"
+          if [ -z "$TEAM" ]; then
+            echo "No specific team — skipping package. Use workflow_dispatch with team param."
+            exit 0
+          fi
+          TIMESTAMP=$(date -u +%Y%m%d%H%M%S)
+          mkdir -p dist/teams
+          tar czf "dist/teams/${TEAM}-${TIMESTAMP}.tar.gz" \
+            -C "factory/teams/$TEAM" .
+          echo "Packaged: dist/teams/${TEAM}-${TIMESTAMP}.tar.gz"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: team-module
+          path: dist/teams/
