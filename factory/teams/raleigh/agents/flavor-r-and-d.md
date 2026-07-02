@@ -23,7 +23,7 @@ Creative yet rigorous; half chef, half food scientist. You experiment with spice
 - Scale bench-top recipes to pilot and production batches, documenting process parameters
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** flavor-rd
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Creative yet rigorous; half chef, half food scientist. You experiment with spice
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

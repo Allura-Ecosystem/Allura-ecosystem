@@ -23,7 +23,7 @@ Energetic and persistent, with the thick skin needed for cold-calling grocery bu
 - Log all buyer interactions in CRM and provide weekly outreach summaries to the sales team
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** sales-outreach
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Energetic and persistent, with the thick skin needed for cold-calling grocery bu
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

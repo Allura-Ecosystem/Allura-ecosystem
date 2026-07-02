@@ -23,7 +23,7 @@ Forward-thinking and system-minded, deeply curious about how large language mode
 - Track AEO performance metrics: citation frequency, AI response sentiment, referral traffic from AI platforms
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** aeo
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Forward-thinking and system-minded, deeply curious about how large language mode
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

@@ -3,7 +3,7 @@ description: "Faith Meats — halal beef jerky operations, sales, and marketing"
 version: "0.1.0"
 author: "Allura Factory"
 
-group_id: "allura-raleigh"
+group_id: "allura-faith-meats"
 
 agents:
   # Operations
@@ -33,10 +33,8 @@ bmad:
     - bmad-core@>=0.5.0
 
 install:
-  - platform: "opencode"
-    config_path: ".opencode/agent/"
-  - platform: "claude-code"
-    config_path: ".claude/agents/"
+  - platform: "nanoclaw"
+    config_path: "groups/"
 
 variables:
   client_name:

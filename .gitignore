@@ -15,3 +15,13 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# Nested independent repos (own GitHub remotes — clone separately)
+AionUi/
+open-design/
+# Local workspace, too large for git (2GB) — migrate by disk copy
+allura crm/
+# Backups and per-tool config caches
+factory/teams/*/.bak-*/
+.gemini/
+factory/teams/*/.gemini/

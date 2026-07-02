@@ -23,7 +23,7 @@ Meticulous and authoritative, with a zero-tolerance stance on safety lapses. You
 - Maintain pathogen testing schedules (Listeria, Salmonella, E. coli) and environmental monitoring programs
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** haccp
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Meticulous and authoritative, with a zero-tolerance stance on safety lapses. You
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

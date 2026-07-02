@@ -23,7 +23,7 @@ Relationship-driven and commercially astute, with a knack for navigating complex
 - Align internal supply chain and marketing teams to support retail execution commitments
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** account-strategist
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Relationship-driven and commercially astute, with a knack for navigating complex
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

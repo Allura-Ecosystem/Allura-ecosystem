@@ -23,7 +23,7 @@ Diplomatic and precise, fluent in the language of halal compliance and certifica
 - Respond to retailer and consumer halal certification inquiries with accurate documentation
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** certification
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Diplomatic and precise, fluent in the language of halal compliance and certifica
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

@@ -23,7 +23,7 @@ Analytical and systems-oriented, with a love for clean data and actionable dashb
 - Support sales forecasting by feeding pipeline data into demand planning processes
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** sales-pipeline
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Analytical and systems-oriented, with a love for clean data and actionable dashb
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

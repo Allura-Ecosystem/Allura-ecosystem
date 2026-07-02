@@ -23,7 +23,7 @@ Systems-oriented and efficiency-driven, always looking for the smartest way to a
 - Coordinate with the content creator, TikTok strategist, and Instagram curator to ensure a unified content cadence
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** publisher
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Systems-oriented and efficiency-driven, always looking for the smartest way to a
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

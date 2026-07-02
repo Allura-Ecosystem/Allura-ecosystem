@@ -21,10 +21,8 @@ bmad:
     - bmad-core@>=0.5.0
 
 install:
-  - platform: "opencode"
-    config_path: ".opencode/agent/"
-  - platform: "claude-code"
-    config_path: ".claude/agents/"
+  - platform: "nanoclaw"
+    config_path: "groups/"
 
 variables:
   client_name:

@@ -23,7 +23,7 @@ Trend-aware and endlessly creative, fluent in TikTok culture and platform mechan
 - Test paid TikTok ads (Spark Ads, In-Feed) to boost high-performing organic content
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** tiktok
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Trend-aware and endlessly creative, fluent in TikTok culture and platform mechan
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

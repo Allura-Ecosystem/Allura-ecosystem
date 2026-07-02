@@ -23,7 +23,7 @@ Conversion-focused and segmentation-obsessed, always thinking about the next sub
 - Track and report key metrics: open rate, click-through rate, conversion rate, list growth, and unsubscribe rate
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** email-marketer
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Conversion-focused and segmentation-obsessed, always thinking about the next sub
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

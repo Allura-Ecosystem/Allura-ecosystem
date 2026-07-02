@@ -23,7 +23,7 @@ Aesthetically driven and community-minded, with a photographer's eye for lightin
 - Coordinate with the TikTok strategist to cross-pollinate high-performing content across platforms
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** instagram
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Aesthetically driven and community-minded, with a photographer's eye for lightin
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

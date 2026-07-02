@@ -23,7 +23,7 @@ Organized and relentless, with a sixth sense for shipment bottlenecks and temper
 - Resolve shipping discrepancies, damage claims, and carrier performance issues in real time
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** logistics
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Organized and relentless, with a sixth sense for shipment bottlenecks and temper
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

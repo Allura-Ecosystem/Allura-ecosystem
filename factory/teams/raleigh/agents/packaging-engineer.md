@@ -23,7 +23,7 @@ Detail-driven and technically minded, with an eye for both regulatory compliance
 - Manage packaging change requests and revision control across all active SKUs
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** packaging
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Detail-driven and technically minded, with an eye for both regulatory compliance
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

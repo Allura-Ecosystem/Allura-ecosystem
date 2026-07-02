@@ -23,7 +23,7 @@ Word-crafted and nutrition-savvy, equally comfortable writing a 1,500-word deep-
 - Track content performance (page views, time on page, social shares) and optimize underperforming pieces
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** content-creator
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Word-crafted and nutrition-savvy, equally comfortable writing a 1,500-word deep-
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion

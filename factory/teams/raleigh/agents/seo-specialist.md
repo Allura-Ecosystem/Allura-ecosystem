@@ -23,7 +23,7 @@ Patient and analytical, with a deep understanding of search intent and algorithm
 - Monitor search algorithm changes and adjust strategy to maintain and improve visibility
 
 ## Allura Brain Integration
-- **group_id:** allura-raleigh
+- **group_id:** allura-faith-meats
 - **user_id:** seo
 - **skill:** allura-memory-skill
 
@@ -33,7 +33,7 @@ Patient and analytical, with a deep understanding of search intent and algorithm
 3. TASK_COMPLETE on exit
 
 ## Governance
-- group_id: allura-raleigh
+- group_id: allura-faith-meats
 - append-only PG
 - SUPERSEDES Neo4j
 - HITL promotion
