@@ -7,6 +7,9 @@ allura module/
 websites/
 .github-public/
 
+# Worktrees (local isolation for feature work)
+.worktrees/
+
 # OS artifacts
 .DS_Store
 Thumbs.db
