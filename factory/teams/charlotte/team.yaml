@@ -17,7 +17,7 @@ bmad:
   module_version: 1
   tags: ["nonprofit", "fundraising", "impact", "governance", "grants"]
   dependencies:
-    - allura-memory-skill@>=0.1.0
+    - allura-memory-skill@>=0.2.0
     - bmad-core@>=0.5.0
 
 install:
