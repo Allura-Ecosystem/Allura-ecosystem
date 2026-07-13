@@ -25,7 +25,7 @@ See [ECOSYSTEM.md](./ECOSYSTEM.md) for the full topology.
 Allura is not a chatbot, not a framework, not a platform. It is a **governed memory engine**:
 
 - **Episodic memory** (PostgreSQL + pgvector) — raw events, conversations, observations
-- **Semantic memory** (Neo4j) — curated knowledge, relationships, approved facts
+- **Semantic memory** (RuVector graph adapter on PostgreSQL) — curated knowledge, relationships, approved facts. Neo4j 5.26 remains as read-only fallback (AD-49 cutover, 2026-07-12)
 - **Curator layer** — human-in-the-loop promotion from episodic → semantic
 - **RuVix enforcement** — policy gates, direct-access blocking, audit trails
 - **MCP-native** — every agent talks to Allura through standard MCP tools
