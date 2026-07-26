@@ -2,7 +2,8 @@
 
 > AI-drafted with research assistance (Exa + Context7). Source of truth is Notion;
 > this file is a mirror per the standing decision (mem-33e1d9be65b38174).
-> Authored under the Brooks (Chief Architect) persona · 2026-06-12.
+> Authored under the Brooks (Chief Architect) persona · 2026-06-12 · updated 2026-07-25.
+> Canonical architecture reference: `allura-memory/docs/allura/BLUEPRINT.md`.
 
 ## TL;DR (the decision I want)
 
@@ -13,6 +14,13 @@ repo is **3 GB+** and can't even `git add` without timing out, and a reorg is si
 adopt a Turborepo monorepo layout so the projects share tooling without fighting Git.
 
 Phased, reversible, no big-bang. One architect's hand on the layout — conceptual integrity.
+
+**Status (2026-07-25):** Phases 0, 1, 2, and 4 are **DONE**. Phase 3 (Turborepo layout
+adoption) remains open and is no longer the priority — the ecosystem map is the source-of-truth
+index and individual repos ship independently. The final structural step was the **RuVector
+graph cutover (AD-49, 2026-07-12)**, which collapsed the semantic layer onto PostgreSQL tables
+behind the `IGraphAdapter` seam and retired Neo4j 5.26 from the production path (AD-50,
+2026-07-17).
 
 ## Current State (hydrated, verified)
 
@@ -61,40 +69,49 @@ structure.
 
 ## The Plan — 4 phases (each independently shippable & reversible)
 
-### Phase 0 — Stabilize (today, ~15 min)
-- Clear the stale `index.lock` (root cause: interrupted `git add`; 0 bytes, no live process).
-- **Don't** `git add -A` yet. Use scoped `git status --porcelain` to confirm the reorg.
-- Decide submodule-vs-monorepo for brand-maker (recommend: fold in).
+### Phase 0 — Stabilize (DONE · 2026-06-12)
+- ✅ Cleared the stale `index.lock` (root cause: interrupted `git add`; 0 bytes, no live process).
+- ✅ Used scoped `git status --porcelain` to confirm the reorg.
+- ✅ Decided submodule-vs-monorepo for brand-maker (folded in).
 
-### Phase 1 — Diagnose the 3 GB (today, ~30 min)
-- Largest tracked paths on disk + largest objects in history.
-- Confirm whether `node_modules`, build artifacts, or media are tracked.
-- Output: a "bloat report" → tells us if we need `.gitignore`+`git rm --cached` (working tree)
-  or `git filter-repo` (history).
+### Phase 1 — Diagnose the 3 GB (DONE · 2026-06-12)
+- ✅ Largest tracked paths on disk + largest objects in history inventoried.
+- ✅ Confirmed tracked `node_modules`, build artifacts, and media were the bloat.
+- ✅ Output: bloat report → working-tree cleanup (`.gitignore` + `git rm --cached`), not history rewrite.
 
-### Phase 2 — Slim & commit the move (this week)
-- Add/repair `.gitignore` (node_modules, dist, .next, .turbo, caches, large binaries).
-- `git rm -r --cached` anything that shouldn't be tracked (keeps files on disk).
-- Move large binaries to **Git LFS**.
-- Then stage with rename detection so the brand-maker move shows as renames, review, **commit**.
-- Push to `github.com/Allura-Ecosystem/team_durham`.
+### Phase 2 — Slim & commit the move (DONE · committed as `dd9732e` 2026-06-14)
+- ✅ Added/repaired `.gitignore` (node_modules, dist, .next, .turbo, caches, large binaries).
+- ✅ `git rm -r --cached` on anything that shouldn't be tracked (files kept on disk).
+- ✅ Moved large binaries to **Git LFS**.
+- ✅ Staged with rename detection so the brand-maker move shows as renames, reviewed, **committed**.
+- ✅ Pushed to `github.com/Allura-Ecosystem/Alluradesign-teamdurham`.
 
-### Phase 3 — Impose Turborepo layout (next sprint)
-- Adopt the standard structure under `Allura-ecosystem`:
+### Phase 3 — Impose Turborepo layout (OPEN · deprioritized 2026-07-25)
+- The ecosystem map (`Allura-ecosystem`) is now the source-of-truth **index**, not a code
+  monorepo. Individual repos (`Allura_Memory`, `allura-team-ram`, `allura-plugins`,
+  `allura-team-durham`, `agent-backups`, `open-design`, `mortagate`) ship independently with
+  their own release cycles. The Turborepo apps/packages/tooling layout is no longer the
+  target — it's parked unless shared TS tooling becomes a real cost.
+- If revisited, the structure under `Allura-ecosystem` would be:
   ```
   apps/        # deployable: allura-brandmaker, ai-agents, client apps
   packages/    # shared: memory, agent-harnesses, config-*, types
   tooling/     # factory, scripts, mcp harnesses
   turbo.json + pnpm-workspace.yaml + minimal root package.json
   ```
-- TS/Node default (your stack). `pnpm` workspaces + Turborepo for cached, scope-aware builds.
-- `turbo boundaries` to enforce package boundaries; CODEOWNERS for ownership.
-- Migrate 2–3 projects first (subtree/`filter-repo` to keep history), prove it, then the rest.
 
-### Phase 4 — Wire to Allura mission control (ongoing)
-- Log the layout decision + each phase outcome to the Allura Brain.
-- Keep Notion as source of truth; mirror this plan there.
-- Work the 243-deep curator queue so the semantic graph stops being stale.
+### Phase 4 — Wire to Allura mission control (DONE · ongoing curator work separate)
+- ✅ Logged the layout decision + each phase outcome to the Allura Brain.
+- ✅ Kept Notion as source of truth; mirrored this plan there.
+- 🟡 The 243-deep curator queue is tracked separately as ongoing work — not a consolidation blocker.
+- ✅ **Final structural step — RuVector graph cutover (AD-49, 2026-07-12):**
+  `GRAPH_BACKEND=ruvector` is the production default, backed by PostgreSQL tables
+  (`graph_memories`, `graph_supersedes`, `graph_structural_nodes`, `graph_structural_edges`)
+  behind the `IGraphAdapter` seam. Neo4j 5.26 is retained as read-only fallback for one
+  release (AD-50 formalized the sunset on 2026-07-17). 14/14 parity checks green
+  (Story 19.3). This collapses two stores toward one engine and removes the per-person
+  Neo4j Community license wall. See `allura-memory/docs/allura/RISKS-AND-DECISIONS.md`
+  AD-49 and `docs/archive/allura/AD-49-ruvector-graph-cutover.md`.
 
 ## Risks & Mitigations
 - **History rewrite (filter-repo)** is destructive → take a full `git bundle` backup first; do it on a clone.
@@ -103,6 +120,7 @@ structure.
 - **Brooks's Law:** this is a one-architect job; don't parallelize the restructure across many hands.
 
 ## Open Decisions (need your call)
-1. brand-maker: fold into monorepo (recommended) vs. keep as submodule.
-2. Repo bloat: are we allowed to rewrite history (`filter-repo`) or working-tree cleanup only?
-3. Package manager: `pnpm` (recommended for monorepos) vs. stay on current.
+1. ~~brand-maker: fold into monorepo (recommended) vs. keep as submodule.~~ **Resolved**: folded in (Phase 2).
+2. ~~Repo bloat: are we allowed to rewrite history (`filter-repo`) or working-tree cleanup only?~~ **Resolved**: working-tree cleanup only (Phase 1/2).
+3. ~~Package manager: `pnpm` (recommended for monorepos) vs. stay on current.~~ **Moot**: Turborepo layout deprioritized; each repo picks its own tooling.
+4. **Open**: whether to revive Phase 3 (Turborepo) if shared TS tooling cost grows. Currently not worth the churn.

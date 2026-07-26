@@ -6,6 +6,17 @@ nanoclaw-v2/
 allura module/
 websites/
 .github-public/
+# Plugin + client sub-repos (own GitHub remotes under Allura-Ecosystem or FaithMeats)
+plugins/team-ram/
+plugins/team-durham/
+plugins/catalog/
+clients/auntie-ny/
+clients/faith-meats/faithclaw/
+clients/faith-meats/faithwebui/
+clients/patriot-awning/
+products/mortagate/
+products/photo-agent/
+_archive/aionui/
 
 # Worktrees (local isolation for feature work)
 .worktrees/
@@ -28,3 +39,20 @@ allura crm/
 factory/teams/*/.bak-*/
 .gemini/
 factory/teams/*/.gemini/
+
+# Dependencies
+node_modules/
+dist/
+.turbo/
+
+# LibreOffice lock files
+.~lock.*
+
+# Secrets — never commit (varlock policy: .opencode/policy/varlock discipline)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets.json
+credentials.json

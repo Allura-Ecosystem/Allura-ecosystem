@@ -9,9 +9,32 @@
         "chrome-devtools-mcp@latest"
       ],
       "type": "local"
+    },
+    "fal-ai": {
+      "type": "remote",
+      "url": "https://mcp.fal.ai/mcp",
+      "oauth": false,
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:FAL_KEY}"
+      }
+    },
+    "bitwarden": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@bitwarden/mcp-server"
+      ],
+      "enabled": true,
+      "timeout": 10000,
+      "environment": {
+        "BW_SESSION": "{env:BW_SESSION}"
+      }
     }
   },
   "plugin": [
     "opencode-scheduler"
-  ]
+  ],
+  "model": "ollama/kimi-k2.6:cloud"
 }

@@ -1,18 +1,28 @@
-# Allura Ecosystem Consolidation — Goal Definition (for sign-off)
+# Allura Ecosystem Consolidation — Goal Definition
 
-> Structured via Brooks NX→S (/define-goal) · 2026-06-12 · pending sign-off (SO)
-> Companion to ALLURA-CONSOLIDATION-PLAN.md. Notion is source of truth; this is a mirror.
+> Structured via Brooks NX→S (/define-goal) · 2026-06-12 · updated 2026-07-25 (post-RuVector cutover).
+> Companion to ALLURA-CONSOLIDATION-PLAN.md. Canonical source is `allura-memory/docs/allura/BLUEPRINT.md`;
+> this file mirrors it. Notion remains source of truth for planning state.
 
 ## Goal
 Make `Allura-ecosystem` the single, version-controlled home for all Allura projects —
 a clean, workable monorepo on `github.com/Allura-Ecosystem/team_durham` — without losing
-history, breaking submodule contracts, or committing into a broken 3 GB repo.
+history, breaking submodule contracts, or committing into a broken 3 GB repo. The ecosystem
+rides on one governed Brain — episodic traces in PostgreSQL, semantic knowledge through the
+RuVector graph adapter (AD-49 cutover, 2026-07-12) — with the Genesis Engine watching trajectories
+and proposing new skills through HITL (AD-54). Self-improvement is now part of the consolidation
+goal, not a separate effort: every agent run feeds the loop — raw traces → curator scores
+(0.0–1.0) → Genesis Engine detects patterns → approved proposals become skills → SUPERSEDES
+versioning keeps it reversible.
 
 ## Outcome (what "done" looks like)
 A developer can clone the repo, run one install + one build, and work on any Allura project.
-`git status` / `git add` are fast. Layout is documented and matches reality. The move that is
-currently half-finished is committed and pushed. Every structural decision is logged to the
-Allura Brain and mirrored to Notion.
+`git status` / `git add` are fast. Layout is documented and matches reality. The consolidation
+move is committed and pushed. Every structural decision is logged to the Allura Brain and
+mirrored to Notion. The semantic graph runs on the RuVector adapter by default
+(`GRAPH_BACKEND=ruvector`), with Neo4j 5.26 retained as read-only fallback for one release
+after the cutover. The Genesis Engine reads trajectories and skill-usage events to propose
+skills — people approve them, never the engine.
 
 ## Scope
 **In scope**
@@ -26,6 +36,9 @@ Allura Brain and mirrored to Notion.
 - Rewriting application code or business logic inside any project.
 - Changing the Allura Brain schema or agent definitions.
 - Draining the full 243-deep curator queue (tracked separately as ongoing).
+- Native RuVector extension functions (Stage 2 — `ruvector_function_count > 0`); the graph
+  adapter cutover (AD-49) uses PG tables, not the native extension. Stage 2 stays gated on
+  TALON evidence per RK-21.
 
 ## Requirements
 - R1. No data loss — every file accounted for before any destructive op; full `git bundle` backup taken first.
@@ -45,12 +58,18 @@ Allura Brain and mirrored to Notion.
 - SC6. Decision log entries exist in the Brain for: bloat strategy, submodule resolution, layout adoption.
 
 ## Definition of Done
-- [ ] Phase 0: stale lock cleared; reorg confirmed via scoped status; brand-maker decision recorded.
-- [ ] Phase 1: bloat report produced; working-tree-vs-history strategy chosen and approved.
-- [ ] Phase 2: `.gitignore` repaired; non-tracked-worthy files un-cached; binaries in LFS; move committed with renames; pushed.
+- [x] Phase 0: stale lock cleared; reorg confirmed via scoped status; brand-maker decision recorded.
+- [x] Phase 1: bloat report produced; working-tree-vs-history strategy chosen and approved.
+- [x] Phase 2: `.gitignore` repaired; non-tracked-worthy files un-cached; binaries in LFS; move committed with renames; pushed.
 - [ ] Phase 3: apps/packages/tooling layout in place; `turbo.json` + `pnpm-workspace.yaml` committed; 2–3 pilot projects migrated with history; build green.
-- [ ] Phase 4: decisions logged to Brain + mirrored to Notion; plan/goal docs reflect final state.
+- [x] Phase 4: decisions logged to Brain + mirrored to Notion; plan/goal docs reflect final state.
 - [ ] Sign-off (SO) on each phase boundary before proceeding to the next.
+- [x] RuVector graph cutover (AD-49, 2026-07-12): `GRAPH_BACKEND=ruvector` is production default;
+  Neo4j 5.26 retained as read-only fallback for one release. See
+  `allura-memory/docs/allura/RISKS-AND-DECISIONS.md` AD-49 and Story 19.3.
+- [x] Genesis Engine foundation (AD-51/52/53/54/55, 2026-07-17): SONA trajectory recording,
+  skill-usage telemetry, coherence monitor, genesis pattern detector, and self-healing
+  accepted for native build under HITL gates. Epic: `epic-level-4-pattern-learning.md`.
 
 ## Assumptions (state + verify)
 - A1. The 3 GB is mostly tracked node_modules/build/binaries (verify in Phase 1). If it's deep history instead, Phase 2 shifts toward `filter-repo`.

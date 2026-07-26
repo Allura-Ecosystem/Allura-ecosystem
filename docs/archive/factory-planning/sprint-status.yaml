@@ -1,0 +1,31 @@
+# Sprint Status: Ecosystem Presentation & Documentation Refresh
+
+# generated: 2026-07-25
+# project: Allura-ecosystem
+# tracking_system: file-system
+# story_location: docs/archive/factory-planning
+
+development_status:
+  # Epic: Ecosystem Presentation & Documentation Refresh
+  epic-ecosystem-presentation: done
+
+  # Story 1: Update stale docs
+  1-1-update-stale-docs: done
+
+  # Story 2: Generate infographics
+  1-2-generate-infographics: done
+
+  # Story 3: Rewrite README (blocked by 1-2)
+  1-3-rewrite-readme: done
+
+  # Story 4: Update Notion (blocked by 1-1)
+  1-4-update-notion: done
+
+  # Story 5: Code review (blocked by 1-3)
+  1-5-code-review: done
+
+  # Story 6: Retrospective (blocked by 1-5)
+  1-6-retrospective: done
+
+  # Retrospective
+  epic-ecosystem-presentation-retrospective: done

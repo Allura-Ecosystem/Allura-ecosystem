@@ -26,7 +26,7 @@ The core principle: **logs are not knowledge.** Raw agent activity is cheap and 
 - PostgreSQL events are append-only — no UPDATE/DELETE
 - Neo4j uses SUPERSEDES for versioning — never edit nodes
 - DB ops via MCP tools only — never `docker exec`
-- Allura Brain MCP at `localhost:5888/mcp`
+- Allura Brain MCP at `https://mcp.faithmeats.org/mcp` (via Cloudflare tunnel, CF Access service token auth)
 - `allura-*` namespace only — flag any `roninclaw-*` as drift
 - Prioritize auditability, versioning, and clarity over speed
 

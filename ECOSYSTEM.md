@@ -24,57 +24,66 @@ This document is the **source-of-truth index** for the Allura ecosystem. It maps
 
 ---
 
-## 2. Harnesses — Agent Teams
+## 2. Plugins — Agent Teams + Catalog
 
-### allura-team-ram
+> In Claude Code, harnesses and plugins are the same layer. Every team is a plugin; the catalog distributes them.
+> **Local path:** `plugins/`
+
+### plugins/team-ram
 - **Repo:** `github.com/Allura-Ecosystem/allura-team-ram`
-- **Role:** Engineering harness — deep implementation, architecture, data/schema, long build/test loops
-- **Stack:** OpenCode + Claude Code, 10 agents, 53 skills, 35 commands
+- **Role:** Engineering harness — architecture, implementation, data/schema, build/test loops
+- **Stack:** OpenCode + Claude Code, 10 agents (Brooks, Woz, Scout, etc.), 53+ skills, 35 commands
 - **Visibility:** Public
-- **Sister team:** TALON (code check, ship readiness)
 - **Allura connection:** ✅ Wired — all agents have `allura-memory-skill` + brain blocks
 
-### allura-team-durham
+### plugins/team-durham
 - **Repo:** `github.com/Allura-Ecosystem/allura-team-durham`
-- **Role:** Brand harness — brand strategy, Figma extraction, copy, market doctrine, brand packets
+- **Role:** Brand harness — strategy, Figma, copy, market doctrine, brand packets
 - **Stack:** OpenCode + Claude Code, 9 agents, allura-memory-skill
 - **Visibility:** Private
-- **Sister team:** IRIS (UX QA, product feel, accessibility)
-- **Allura connection:** ✅ Wired — dual-platform (OpenCode + Claude Code), 18 agent configs
+- **Allura connection:** ✅ Wired — dual-platform (OpenCode + Claude Code)
 
----
-
-## 3. Plugin System
-
-### allura-plugins
+### plugins/catalog
 - **Repo:** `github.com/Allura-Ecosystem/allura-plugins`
-- **Role:** Canonical dual-runtime plugin catalog for the Allura ecosystem
+- **Role:** Marketplace registry — packages team-ram and team-durham as installable plugins
 - **Visibility:** Private
-- **Contents:** Plugin specs, runtime adapters, marketplace metadata
 
 ---
 
-## 4. Agent Factory
+## 3. Clients
 
-### factory/ (in this repo)
-- **Role:** Shipyard — takes client requirements → produces packaged agent teams with Allura governance baked in
-- **Pipeline:** SPEC → BUILD → OVERLAY → VALIDATE → PACKAGE → DEPLOY
-- **Teams built:**
-  - `penasoto/` — Mortgage audit team (7 agents, packaged)
-  - `raleigh/` — Faith Meats (15 agents, specs only)
-  - `charlotte/` — Difference Driven (6 agents, specs only)
-- **Validation:** `validate.sh` checks structure + Allura gates
-- **CI:** `.github/workflows/team-ci.yml` — validates on push/PR
+> Live client deployments — each wired to Brain via `https://mcp.faithmeats.org`.
+> **Local path:** `clients/`
+
+| Client | Path | Stack | Status |
+|--------|------|-------|--------|
+| Faith Meats | `clients/faith-meats/` | Hermes/nanoclaw + faithwebui · Ollama local: Troy, Omar, Jeeves | ✅ Active — Stage 1 in progress |
+| Patriot Awning | `clients/patriot-awning/` | Next.js + Sanity · `payload-planning/` = brand docs | 🟢 Active |
+| Auntie NY | `clients/auntie-ny/` | Payload CMS | 🟢 Active |
 
 ---
 
-## 5. Client Projects
+## 4. Products
 
-| Project | Location | Description |
-|---------|----------|-------------|
-| Mortgage Audit | `allura module/mortgage-audit/` | Client project — Penasoto team |
-| Payload Website | `websites/payload/` | Difference Driven website |
-| Nanoclaw v2 | `nanoclaw-v2/` | Fork of `nanocoai/nanoclaw` |
+> Portfolio and first-party software.
+> **Local path:** `products/`
+
+| Product | Path | Description |
+|---------|------|-------------|
+| Mortagate | `products/mortagate/` | Veridact — mortgage audit replay & QC (Salesforce) |
+| Open Design | `products/open-design/` | Local-first open-source Claude Design alternative |
+
+---
+
+## 5. Difference Driven (External Org)
+
+> Difference Driven is a separate design agency business — **not part of the Allura ecosystem.**
+> It has its own GitHub org and its own codebase. Team Durham (the agent harness) serves it, but the agency's deliverables live elsewhere.
+
+| Item | Location | Notes |
+|------|----------|-------|
+| dd-site | `~/Projects/difference-driven/dd-site/` (local) | Agency website — Payload CMS. Push to Difference Driven GitHub org. |
+| Team Durham harness | `plugins/team-durham/` | Stays in Allura — it's a plugin, not a deliverable |
 
 ---
 
@@ -113,21 +122,17 @@ Every memory write, promotion, and retrieval passes through the gate. No agent b
 ## 8. Relationship Graph
 
 ```
-Allura_Memory (brain)
-    ├── consumed by → allura-team-ram (engineering)
-    ├── consumed by → allura-team-durham (brand)
-    ├── consumed by → allura-plugins (plugin catalog)
-    ├── consumed by → all client projects
+allura-memory (brain)
+    ├── consumed by → plugins/team-ram
+    ├── consumed by → plugins/team-durham
+    ├── consumed by → clients/faith-meats
+    ├── consumed by → clients/patriot-awning
+    ├── consumed by → products/*
+    ├── exposed via → https://mcp.faithmeats.org (Cloudflare tunnel)
     └── governed by → RuVix (POL-001..006)
 
-allura-team-ram (engineering)
-    └── sister team → TALON (code review, deploy, ship readiness)
-
-allura-team-durham (brand)
-    └── sister team → IRIS (UX QA, product feel, accessibility)
-
-Agent Factory (this repo)
-    └── produces → packaged agent teams with Allura governance
+plugins/catalog (allura-plugins)
+    └── packages → team-ram + team-durham as installable plugins
 ```
 
 ---
@@ -142,18 +147,18 @@ The canonical planning board is the **Allura Work Board** on Notion. This repo's
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| Allura_Memory | ✅ Production | 8.5/10 quality, 29/29 E2E tests |
-| PostgreSQL | ✅ Healthy | pgvector 0.8.2, HNSW index valid |
-| Neo4j | ✅ Healthy | 9 indexes + 1 constraint, 81 Memory nodes |
-| Ollama (embeddings) | ✅ Healthy | qwen3-embedding:8b, 1024d Matryoshka |
-| allura-team-ram | ✅ Wired | 10 agents, Allura-connected |
+| Allura_Memory (Brain) | ✅ Production | MCP gateway healthy at :5888 |
+| PostgreSQL | ✅ Healthy | pgvector, HNSW index, append-only |
+| Neo4j | ⚠️ Degraded — intentional | GRAPH_BACKEND=ruvector (AD-49); read-only fallback only |
+| Curator queue | ✅ Clean | Drained 2026-07-26 ~05:07 UTC via hermes-curator · cron next run 06:00 EDT |
+| Ollama (embeddings) | ✅ Healthy | qwen3-embedding:8b |
+| Cloudflare tunnel | ✅ Live | mcp.faithmeats.org — split writes >~400 chars to avoid 520s |
+| allura-team-ram | ✅ Wired | 10 agents, path corrected to plugins/team-ram/ |
 | allura-team-durham | ✅ Wired | 9 agents, dual-platform |
-| allura-plugins | 🟢 Active | Private catalog |
-| Agent Factory | 🟢 Active | 3 team specs, CI pipeline |
-| WhatsApp bridge | ✅ Healthy | Auto-recovery verified |
-| Perplexica search | ✅ Healthy | 1.12.1, streamable-http transport |
-| Penpot CLI harness | ✅ Healthy | 38/38 tests, 17 command groups |
+| allura-plugins catalog | 🟢 Active | Private |
+| Faith Meats stack | 🟡 Stage 1 in progress | D1 resolved: Ollama local Troy/Omar/Jeeves · D3 open |
+| Agent Factory | 🗄️ Archived | Sunsetted — moved to _archive/ |
 
 ---
 
-*Last updated: 2026-06-17*
+*Last updated: 2026-07-26*

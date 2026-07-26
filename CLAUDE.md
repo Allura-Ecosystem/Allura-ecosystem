@@ -1,15 +1,34 @@
 # CLAUDE.md
 
 ## What This Is
-Allura ecosystem monorepo — agent harnesses, factory teams, memory system, and client projects.
+Allura ecosystem monorepo — governed memory engine, agent plugins, client deployments, and products.
 
 The core principle: **logs are not knowledge.** Raw agent activity is cheap and noisy. Knowledge is expensive, versioned, and approved. Allura keeps these two things in separate layers and never lets them collapse into each other.
 
+## Structure
+```
+allura-memory/          Brain — PostgreSQL + pgvector + MCP gateway
+plugins/
+  team-ram/             Engineering harness (Brooks, Woz, Scout, etc.)
+  team-durham/          Brand harness
+  catalog/              allura-plugins marketplace registry
+clients/
+  faith-meats/          Faith Meats stack — Hermes/nanoclaw + faithwebui (Ollama local: Troy/Omar/Jeeves)
+  patriot-awning/       Patriot Awning — Next.js + Sanity + payload-planning/
+  auntie-ny/            Auntie NY — Payload CMS client site
+products/
+  mortagate/            Veridact mortgage audit platform (portfolio)
+  open-design/          Local-first design tool
+docs/                   Architecture docs, ADRs, governance notes
+_archive/               Sunsetted: aionui, nanoclaw-v2, factory, allura-crm
+```
+
 ## Key Paths
-- `Agent-Harnesses/Allura-TeamRam/` — Team RAM harness (Brooks, Woz, Scout, etc.)
+- `plugins/team-ram/` — Team RAM harness (Brooks, Woz, Scout, etc.)
+- `plugins/team-durham/` — Team Durham brand harness
+- `plugins/catalog/` — allura-plugins marketplace registry
 - `allura-memory/` — Allura Brain app (Next.js + PostgreSQL + Neo4j)
-- `factory/` — Team manifests and agent templates
-- `docs/` — Architecture docs and consolidation plans
+- `docs/` — Architecture docs and ADRs
 - `docs/archive/factory-planning/ruvector-cicd-execution-plan.md` — RuVector integration plan
 - `docs/archive/factory-planning/allura-ruvector-integration-adr.md` — RuVector boundary ADR
 
@@ -26,7 +45,7 @@ The core principle: **logs are not knowledge.** Raw agent activity is cheap and 
 - PostgreSQL events are append-only — no UPDATE/DELETE
 - Neo4j uses SUPERSEDES for versioning — never edit nodes
 - DB ops via MCP tools only — never `docker exec`
-- Allura Brain MCP at `localhost:5888/mcp`
+- Allura Brain MCP at `https://mcp.faithmeats.org` (Cloudflare tunnel, canonical) or `localhost:5888/mcp` (local)
 - `allura-*` namespace only — flag any `roninclaw-*` as drift
 - Prioritize auditability, versioning, and clarity over speed
 
@@ -55,11 +74,8 @@ The core principle: **logs are not knowledge.** Raw agent activity is cheap and 
 
 ## Test
 ```bash
-# Factory validation gate (root repo)
-bash factory/validate.sh factory/teams/raleigh
-
-# TeamRAM integration tests (sub-repo, separate remote)
-cd Agent-Harnesses/Allura-TeamRam && bun run test-integration.ts
+# TeamRAM integration tests
+cd plugins/team-ram && bun run test-integration.ts
 ```
 
 ## Definition of Done (end-to-end)
