@@ -1,50 +1,9 @@
 {
   "name": "allura-ecosystem-marketplace",
+  "description": "Allura Ecosystem — index of available plugin marketplaces. Install plugins from their individual repos listed below.",
   "owner": {
     "name": "Allura Ecosystem",
     "url": "https://github.com/Allura-Ecosystem"
   },
-  "metadata": {
-    "description": "Allura Ecosystem — governed memory engine, agent harnesses, and tools for deterministic AI-powered development.",
-    "version": "1.0.0"
-  },
-  "plugins": [
-    {
-      "name": "team-ram-harness",
-      "source": "https://github.com/Allura-Ecosystem/allura-team-ram",
-      "description": "Team RAM Engineering Harness — 10 specialist agents (Brooks, Woz, Scout, Pike, Fowler, Bellard, Carmack, Knuth, Hightower), 53+ skills, HITL governance, and Allura Brain memory integration.",
-      "version": "0.4.2",
-      "author": {
-        "name": "Allura Ecosystem — Team RAM"
-      },
-      "license": "MIT",
-      "keywords": [
-        "multi-agent",
-        "orchestration",
-        "team-ram",
-        "allura",
-        "governance",
-        "coding"
-      ],
-      "category": "Coding"
-    },
-    {
-      "name": "team-durham",
-      "source": "https://github.com/Allura-Ecosystem/allura-team-durham",
-      "description": "Team Durham Brand Harness — 9 specialist agents for brand strategy, Figma, copy, market doctrine, and brand packets.",
-      "version": "1.0.0",
-      "author": {
-        "name": "Allura Ecosystem — Team Durham"
-      },
-      "license": "MIT",
-      "keywords": [
-        "brand",
-        "design",
-        "team-durham",
-        "allura",
-        "marketing"
-      ],
-      "category": "Design"
-    }
-  ]
+  "plugins": []
 }
