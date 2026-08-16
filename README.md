@@ -144,6 +144,23 @@ These lowercase governance-registry IDs are distinct from uppercase kernel `POL-
 
 ## Quick start
 
+## Documentation alignment
+
+These README statements are maintained from this repository's canonical sources: implementation code, `Allura-ecosystem/ECOSYSTEM.md`, and ADRs in each target repository. If a claim conflicts, the canonical code and ADRs take precedence.
+
+Canonical names used by Allura branding and product docs:
+
+- Allura Memory / Allura Brain
+- Allura Cowork
+- Team Durham
+- Team RAM Coding
+
+Terminology in this README follows the governance rule:
+
+- Episodic traces are evidence.
+- Semantic records are governed, tenant-scoped knowledge.
+- Human approval remains the accountable trust boundary.
+
 ### 1. Clone the map and the Brain
 
 ```bash
