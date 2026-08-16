@@ -1,0 +1,38 @@
+id: allura-ecosystem-portfolio-hero-v1
+purpose: "Neutral GitHub and portfolio hero image for the Allura ecosystem."
+destination:
+  primary: "GitHub organization or ecosystem portfolio header"
+  dimensions: "1600x900"
+  aspect_ratio: "16:9"
+reference_roles:
+  - path: "/home/ronin704/Pictures/Codex Image Aug 16, 2026, 12_38_29 PM.png"
+    role: "layout"
+    transfer: "restrained navy/white enterprise hierarchy and grouped system zones"
+    exclude: "vendor logos, deployment claims, embedded text"
+  - path: "/home/ronin704/Pictures/Codex Image Aug 16, 2026, 12_57_11 PM.png"
+    role: "composition"
+    transfer: "modular ecosystem grouping and generous whitespace"
+    exclude: "internal labels and sovereign-memory claim"
+  - path: "/home/ronin704/Pictures/Codex Image Aug 16, 2026, 12_39_15 PM.png"
+    role: "anti-reference"
+    transfer: "none"
+    exclude: "infinite-memory wording, dense technical plate, small labels"
+visual_rules:
+  palette: "deep navy field, low-saturation blue structure, white translucent planes, one restrained approval-green accent"
+  composition: "three offset material planes, quiet evidence path, broad negative space, no literal architecture diagram"
+  style: "minimal editorial technical material study; no generic AI imagery"
+  text_policy: "no text in the image"
+negative_constraints:
+  - "no logos, trademarks, vendors, people, hands, brains, circuitry, robots, clouds, or UI screenshots"
+  - "no technical labels, code, source paths, fake charts, or generated typography"
+  - "no claim of production readiness, scale, availability, security certification, or customer use"
+  - "no Neo4j or legacy architecture representation"
+production:
+  tool_path: "Codex/OpenDesign fallback using reproducible Pillow source; fal unavailable locally at production time"
+  source: "assets/portfolio/allura-evidence-hero-v1.py"
+  output: "assets/portfolio/allura-evidence-hero-v1.png"
+qa:
+  state: "pending final visual review"
+  source_claim_check: "pass: no technical claim embedded"
+  text_policy_check: "pending OCR"
+  crop_check: "pending thumbnail render"
