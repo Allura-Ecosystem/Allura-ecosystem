@@ -1,162 +1,164 @@
-# Allura Ecosystem — Repository Topology and Index
+# Allura Ecosystem — Public Repository Topology and Index
 
-This document is a repository-grounded navigation index for the Allura ecosystem. It describes what is present in the current workspace, what the owning repositories say about themselves, and where a relationship still needs confirmation.
+This repository is the public source-of-truth index for how the Allura repositories relate. It maps authority, distribution, and runtime boundaries; it does not duplicate sibling product source or replace the owning repositories' implementation documentation.
 
-It is not a deployment dashboard, client registry, ownership ledger, or substitute for runtime health checks. Repository code and schemas outrank status prose when they disagree.
+Repository code, schema, machine-readable source/export contracts, and accepted decisions outrank this summary if they disagree.
 
-## Evidence and boundary rules
+## Repository model
 
-- The workspace at `/mnt/projects/Allura-Ecosystem/` contains independent Git checkouts. They are not directories in this repository and are not Git submodules of `Allura-ecosystem`.
-- A checkout beside this repository proves local availability only. It does not prove that the repository is an owned product, publicly visible, deployed, or supported.
-- The current `Allura-ecosystem/README.md` defines the ecosystem navigation surface. Allura Memory code, schema, Compose configuration, and canonical ADRs define the Brain implementation.
-- `allura-plugins` manifests define the installable plugin names, package paths, versions, and runtime manifests.
-- Operational health, production readiness, quality scores, client status, ownership, and visibility are omitted unless the inspected repositories establish them. Unresolved relationships are marked `[DATA NEEDED]`.
+Allura is a set of independent public repositories, not a monorepo and not a set of submodules.
 
-## Canonical names
+| Repository | Canonical responsibility | Public baseline evidence |
+|---|---|---|
+| [`Allura_Memory`](https://github.com/Allura-Ecosystem/Allura_Memory) | Governed memory and control plane: MCP/API, PostgreSQL storage, PostgreSQL graph tables, RuVector adapter, curator, policy, and audit | Public canonical product repository; owning README and AD-49/AD-50 define the active architecture |
+| [`allura-team-ram`](https://github.com/Allura-Ecosystem/allura-team-ram) | Canonical Team RAM multi-agent software-delivery harness source | [`72f70ce7564084e4d95c21a6ba281dab81090e6a`](https://github.com/Allura-Ecosystem/allura-team-ram/commit/72f70ce7564084e4d95c21a6ba281dab81090e6a), CI green |
+| [`team-durham`](https://github.com/Allura-Ecosystem/team-durham) | Canonical Team Durham brand-production source: 12 canonical roles plus the `openagent` compatibility fallback | [`7e521976aef40b396e439d45c867d990c8237b11`](https://github.com/Allura-Ecosystem/team-durham/commit/7e521976aef40b396e439d45c867d990c8237b11), clean canonical root, CI green |
+| [`mortagate`](https://github.com/Allura-Ecosystem/mortagate) | Canonical Mortgate Microsoft Copilot Cowork mortgage evidence-review product source | [`c926bdbe101829c7937ad90f9ee08100a55f463a`](https://github.com/Allura-Ecosystem/mortagate/commit/c926bdbe101829c7937ad90f9ee08100a55f463a), CI green |
+| [`allura-plugins`](https://github.com/Allura-Ecosystem/allura-plugins) | Distribution catalog for runtime packages and generated exports; it does not replace standalone source authority | Public catalog; install aliases remain `team-ram-coding` and `team-durham` |
+| [`.github`](https://github.com/Allura-Ecosystem/.github) | Organization profile and community metadata mapping the public surfaces | Public organization profile repository |
+| [`Allura-ecosystem`](https://github.com/Allura-Ecosystem/Allura-ecosystem) | This public repository index, shared doctrine, topology, and navigation | Public index repository |
 
-| Name | Meaning |
-|---|---|
-| **Allura Memory** | The governed memory product and the `Allura_Memory` repository. |
-| **Allura Brain** | The governed MCP/API capability provided by Allura Memory. It is not a separate repository in this workspace. |
-| **Allura Cowork** | The Claude/Codex coordination and validated-handoff plugin packaged as `allura-cowork`. |
-| **Team Durham** | The brand-production plugin packaged as `team-durham`. A separate sibling checkout named `team-durham` is a delivery workspace, not evidence of a separate Allura product. |
-| **Team RAM Coding** | The Brooks-led coding plugin packaged as `team-ram-coding`. |
+A sibling checkout is only a local convenience. The GitHub repository and its declared source contract remain authoritative.
 
-Repository slugs and package IDs remain in code formatting when they differ from the canonical display name.
+## Topology and authority flow
 
-## Core topology
+```mermaid
+flowchart TB
+    Callers["MCP-capable callers"] --> Memory["Allura_Memory\nGoverned memory + control plane"]
+    Memory --> PG["PostgreSQL 16 + pgvector\nEpisodic evidence + audit"]
+    Memory --> Graph["PostgreSQL graph tables\nRuVector adapter + semantic lineage"]
 
-```text
-Claude, Codex, and other MCP-capable callers
-                       |
-                       v
-                Allura Brain
-       governed MCP/API boundary in Allura Memory
-                       |
-             identity + tenant scope
-             RuVix policy + audit
-                       |
-          +------------+-------------+
-          |                          |
-          v                          v
-  episodic evidence          semantic knowledge
-  PostgreSQL events          PostgreSQL graph tables
-  append-oriented            approved + versioned
-                              SUPERSEDES lineage
-          ^                          ^
-          |                          |
-          +--- curator proposal -----+
-                  + governance decision
+    RAM["allura-team-ram\ncanonical Team RAM source"] -->|validated pinned export| Catalog["allura-plugins\ndistribution catalog"]
+    Durham["team-durham\ncanonical Durham source"] -->|validated pinned export| Catalog
+    Mortgate["mortagate\ncanonical Microsoft Cowork product"] -.->|future allowlisted export only| Catalog
+
+    Catalog --> Claude["Claude package surfaces"]
+    Catalog --> Codex["Codex package surfaces"]
+    Catalog --> Hermes["Hermes-native providers"]
+
+    Mortgate --> Microsoft["Microsoft Copilot Cowork\ncurrent Mortgate runtime"]
+    Org[".github organization profile"] --> Memory
+    Org --> RAM
+    Org --> Durham
+    Org --> Mortgate
+    Org --> Catalog
+    Index["Allura-ecosystem\npublic index"] --> Org
 ```
 
-### Allura Memory and Allura Brain
+The source direction is one-way:
 
-| Item | Repository-grounded description |
+```text
+standalone canonical repository
+        ↓ validate an explicit public/export allowlist
+commit-pinned generated export
+        ↓ publish or install
+allura-plugins catalog/runtime surface
+```
+
+Fixes flow back to the standalone owner before regeneration. A generated catalog copy is pinned and non-authoritative; it must not become a second editable source.
+
+## Allura Memory and Allura Brain
+
+**Allura Memory** is the governed memory product and repository. **Allura Brain** is the governed MCP/API capability it provides, not a separate repository.
+
+Allura Memory uses one PostgreSQL engine with two governed logical layers:
+
+| Layer | Current store | Purpose | Mutation model |
+|---|---|---|---|
+| Episodic evidence | PostgreSQL 16 + pgvector | Events, traces, proposals, embeddings, and audit evidence | Append-oriented |
+| Semantic knowledge | `graph_memories`, `graph_supersedes`, and related PostgreSQL graph tables through the `ruvector` adapter | Curated memories and relationships | Promote, supersede, deprecate |
+
+The governed lifecycle remains evidence → proposal → accountable approval → canonical materialization → scoped retrieval with provenance. Agent-facing clients use MCP/API operations rather than direct database access.
+
+### Neo4j sunset
+
+Neo4j is not an active store, dependency, or fallback. AD-49 records the PostgreSQL graph-table cutover; AD-50 formalizes the PostgreSQL-only sunset. Historical plans, archived records, compatibility comments, and dated operational notes may preserve Neo4j references as migration history, but they do not define current rules or topology.
+
+`GRAPH_BACKEND=ruvector` names the PostgreSQL-table graph adapter. It should not be described as proof that an optional native RuVector extension is active.
+
+### Verified ports and paths
+
+Only owning-repository instructions should be copied into operator guidance. The current [`Allura_Memory` README](https://github.com/Allura-Ecosystem/Allura_Memory#start-the-containerized-service) documents:
+
+| Surface | Verified value |
 |---|---|
-| Repository | [`Allura_Memory`](https://github.com/Allura-Ecosystem/Allura_Memory) |
-| Product | Allura Memory |
-| Service capability | Allura Brain, exposed through the governed MCP/API boundary |
-| Episodic layer | PostgreSQL 16 with pgvector; append-oriented events and traces |
-| Semantic layer | PostgreSQL tables including `graph_memories` and `graph_supersedes`, accessed through the `ruvector` graph adapter |
-| Promotion | Candidate proposal followed by a governance decision; approval authorizes or queues canonical materialization, while automated curator behavior remains under review |
-| Versioning | New canonical versions preserve lineage through `SUPERSEDES`; prior evidence remains inspectable |
-| Containerized gateway | Compose publishes host port `6477` to the gateway's container port `3201`; this is configuration, not a health claim |
+| Compose MCP gateway | Host `6477` → container `3201`; readiness at `http://localhost:6477/ready`; MCP at `http://localhost:6477/mcp` |
 | Direct development gateway | Defaults to port `3201` |
-| Visibility | `[DATA NEEDED]` — a local checkout and GitHub origin do not establish current repository visibility |
+| PostgreSQL | Loopback-only `127.0.0.1:5432` in the documented Compose stack |
 
-Neo4j is not an active store or fallback in the current architecture. AD-49 records the PostgreSQL-table graph cutover, and AD-50 formalizes the PostgreSQL-only sunset. The active Compose file contains no Neo4j service and sets `GRAPH_BACKEND=ruvector`. Compatibility code, archived migration material, and stale policy prose may still contain Neo4j terminology; those references do not define the current topology.
+No historical `5888` or Neo4j health instruction is active guidance.
 
-The `ruvector` backend name refers to the repository's PostgreSQL-table graph adapter. Canonical documentation should not imply that the native RuVector extension is active without separate runtime evidence.
+## Team and product sources
 
-### Governance invariants
+### Team RAM
 
-The inspected code, schema, README, and ADRs support these invariant names:
+[`allura-team-ram`](https://github.com/Allura-Ecosystem/allura-team-ram) is the canonical public source for the standalone Team RAM software-delivery harness. It supports OpenCode, Claude Code, and Codex runtime surfaces and remains useful without Allura Memory; optional Memory integration must degrade visibly when unavailable.
 
-| Invariant | Current contract |
+Its `SOURCE.json` and `PUBLIC_EXPORT.json` define ownership and public export scope. `allura-plugins` consumes a pinned generated export under the existing install alias **`team-ram-coding`**.
+
+### Team Durham
+
+[`team-durham`](https://github.com/Allura-Ecosystem/team-durham) is the canonical public source for Team Durham. Its role model is **12 canonical roles plus one non-persona `openagent` compatibility fallback**. The fallback explains why some manifests contain 13 agent-definition files without creating a thirteenth canonical role.
+
+Team Durham's export tooling injects source-revision provenance and a file inventory. `allura-plugins` consumes the generated package under the existing install alias **`team-durham`**.
+
+### Mortgate
+
+[`mortagate`](https://github.com/Allura-Ecosystem/mortagate) is the canonical public source for **Mortgate Evidence Review for Microsoft Copilot Cowork**. Its current product lives in `microsoft-cowork/` and provides four human-supervised mortgage evidence-review Agent Skills. It does not approve or deny credit, set pricing, issue notices, contact borrowers, or write to a loan system of record.
+
+Mortgate is a Microsoft 365/Copilot Cowork product surface, not a Claude or Codex package. Its `catalog-export.json` defines a possible future allowlisted export to `allura-plugins/packages/mortagate-cowork`; that path is not a current published package or install alias.
+
+Salesforce/Veridact files under `force-app/` and their former gates are retained as historical evidence after ADR-36. They are not supported for current product development or deployment.
+
+## Distribution catalog
+
+[`allura-plugins`](https://github.com/Allura-Ecosystem/allura-plugins) owns catalog assembly, manifests, runtime packaging, model-policy metadata, and release validation. It does not own the canonical Team RAM, Team Durham, or Mortgate content copied into generated packages.
+
+| Catalog/runtime surface | Authority boundary |
 |---|---|
-| Tenant scope | Memory operations carry a valid `group_id`; production tenant names follow the `allura-*` namespace. |
-| Episodic evidence | Raw event and trace history is append-oriented and is not rewritten into knowledge. |
-| Knowledge lineage | Canonical changes create a new version and retain `SUPERSEDES` lineage. |
-| Accountable approval | Curator output is a proposal. Human approval is the accountable boundary; the current automated-curator path remains an explicit policy-resolution item. |
-| Governed access | Agent-facing reads and writes pass through the MCP/API and policy boundary rather than direct storage access. |
-| Auditability | Identity, scope, provenance, approval, and failure information remain available as evidence or receipts. |
+| `allura-cowork` | Catalog-owned Claude/Codex coordination package; coordinates distinct runtimes and does not imply that another runtime executed |
+| `team-ram-coding` | Install alias for a pinned generated export from `allura-team-ram` |
+| `team-durham` | Install alias for a pinned generated export from `team-durham` |
+| `plugins/hermes-allura-brain` | Hermes-native provider maintained by the catalog |
+| Future `packages/mortagate-cowork` | Reserved generated-consumer path from Mortgate; not currently published |
 
-No inspected canonical registry establishes the former six `POL-001` through `POL-006` mappings. Those numeric IDs are intentionally not reassigned here. A canonical policy-ID registry and owner are `[DATA NEEDED]`.
+Current Claude marketplace aliases remain:
 
-## Plugin catalog
+```text
+/plugin marketplace add Allura-Ecosystem/allura-plugins
+/plugin install allura-cowork@allura-ecosystem
+/plugin install team-durham@allura-ecosystem
+/plugin install team-ram-coding@allura-ecosystem
+```
 
-The independent sibling repository [`allura-plugins`](https://github.com/Allura-Ecosystem/allura-plugins) is the checked-out catalog source. Its current Claude marketplace manifest lists three packages at version `0.2.0`; each package also contains Claude and Codex manifests.
+Claude, Codex, Hermes, OpenCode, and Microsoft Copilot Cowork are distinct runtime surfaces. A manifest, model alias, export, or prepared handoff is not proof that a runtime installed, loaded, or executed the package.
 
-| Canonical name | Package ID | Catalog path | Repository-grounded role |
-|---|---|---|---|
-| **Allura Cowork** | `allura-cowork` | `allura-plugins/allura-cowork/` | Coordinates Claude and Codex with runtime honesty, governed handoffs, validation, and outcome logging. |
-| **Team Durham** | `team-durham` | `allura-plugins/team-durham/` | Brand strategy and production team with agents, skills, commands, governance, and optional design integrations. |
-| **Team RAM Coding** | `team-ram-coding` | `allura-plugins/team-ram-coding/` | Brooks-led software delivery team for architecture, reconnaissance, implementation, review, validation, memory, and task workflows. |
+## Organization profile
 
-The catalog does not make plugin execution equivalent to Allura Memory. Plugins consume the Allura Brain contract for governed hydration and outcome logging; they do not own or bypass memory governance.
+The [`.github` organization profile](https://github.com/Allura-Ecosystem/.github/blob/main/profile/README.md) maps the public Allura Memory, Team RAM, plugin catalog, and ecosystem-index surfaces. This index expands that map with the now-canonical Team Durham and Mortgate repositories and their source/export boundaries.
 
-The sibling `allura-team-ram` checkout describes the fuller Team RAM harness. The exact source, release, and synchronization relationship between that repository and the packaged **Team RAM Coding** directory is `[DATA NEEDED]`; they must not be treated as the same checkout merely because they share Team RAM concepts.
+## Historical and local-only material
 
-The sibling `team-durham` checkout identifies itself as a delivery workspace and explicitly says it is not the Allura product repository. The synchronization and release-authority relationship between that workspace and the packaged **Team Durham** plugin is `[DATA NEEDED]`.
+This repository contains archives, journals, governance notes, client migration plans, and compatibility artifacts. Preserve them when they provide dated evidence, but do not use them as current architecture or deployment instructions.
 
-## Repository index
+In particular:
 
-### Documented ecosystem repositories
+- `clients/faith-meats/MIGRATION-PLAN.md` is a dated plan, not live deployment evidence.
+- `docs/archive/` is historical planning material.
+- older references to Neo4j, port `5888`, a local monorepo layout, Salesforce Veridact as the active Mortgate product, or local Team RAM/Durham copies are superseded as active guidance.
 
-| Repository | Role supported by inspected files | Relationship boundary | Visibility |
-|---|---|---|---|
-| [`Allura-ecosystem`](https://github.com/Allura-Ecosystem/Allura-ecosystem) | Organization map, shared doctrine, navigation, and governance documentation | This repository; it does not contain the sibling products as submodules | `[DATA NEEDED]` |
-| [`Allura_Memory`](https://github.com/Allura-Ecosystem/Allura_Memory) | Allura Memory product and Allura Brain implementation | Independent sibling checkout | `[DATA NEEDED]` |
-| [`allura-plugins`](https://github.com/Allura-Ecosystem/allura-plugins) | Plugin catalog and packages for Allura Cowork, Team Durham, and Team RAM Coding | Independent sibling checkout | `[DATA NEEDED]` |
-| [`allura-team-ram`](https://github.com/Allura-Ecosystem/allura-team-ram) | Full Team RAM multi-agent engineering harness | Independent sibling checkout; package synchronization is `[DATA NEEDED]` | `[DATA NEEDED]` |
-| [`.github`](https://github.com/Allura-Ecosystem/.github) | Organization profile and shared community-health files | Independent sibling checkout; its README says it is not a product module | `[DATA NEEDED]` |
+## Source precedence
 
-### Other checked-out sibling repositories
+1. Owning repository implementation, schema, active configuration, `SOURCE.json`, and export contracts.
+2. Accepted owning-repository decisions, including Allura Memory AD-49/AD-50 and Mortgate ADR-36.
+3. Owning repository README and canonical architecture documentation.
+4. This repository's `README.md`, `ECOSYSTEM.md`, `AGENTS.md`, and `CLAUDE.md`.
+5. Generated exports, runtime-installed copies, archived plans, journals, and compatibility history.
 
-These rows describe local workspace topology only. They do not establish Allura ownership or product status.
+## Remaining unknowns
 
-| Checkout | What the inspected repository says | Ecosystem/product relationship | Visibility |
-|---|---|---|---|
-| `mortagate` | Its README identifies the product as Veridact, a mortgage audit replay and quality-control platform built on Salesforce | Listed by the current ecosystem README in a product context; ownership and first-party status are `[DATA NEEDED]` | `[DATA NEEDED]` |
-| `open-design` | Its README identifies Open Design as a local-first, open-source design workspace and links release assets to `nexu-io/open-design` | Listed by the current ecosystem README in a product context; ownership and first-party status are `[DATA NEEDED]` | The checkout contains an Apache-2.0 license, but current repository visibility is `[DATA NEEDED]` |
-| `team-durham` | Delivery workspace; explicitly outside the Allura product inventory | Relationship to the packaged Team Durham plugin is `[DATA NEEDED]` | `[DATA NEEDED]` |
-| `allura` | No top-level README or manifest was found in the inspected checkout | `[DATA NEEDED]` | `[DATA NEEDED]` |
-| `agent-backups` | Operational backup checkout | No product relationship established; ownership and retention policy are `[DATA NEEDED]` | `[DATA NEEDED]` |
-
-No `products/` directory exists in this repository. Product-like sibling repositories must therefore be linked as independent repositories, not documented as `products/*` children.
-
-## Client boundary
-
-The only checked-in path under `clients/` is `clients/faith-meats/MIGRATION-PLAN.md`. It is a dated migration plan, not a client application checkout, deployment manifest, ownership record, or current health source. It also contains historical endpoint and Neo4j health language that is superseded by the current Allura Memory topology.
-
-| Client reference | Evidence present | Relationship and current state |
-|---|---|---|
-| Faith Meats | One migration-plan document | Client authorization, ownership, system location, deployment state, endpoint, and current integration status are `[DATA NEEDED]` |
-
-No checked-in Patriot Awning or Auntie NY client directories were found. They are not part of the current repository topology.
-
-## Source index and precedence
-
-Use the following order when correcting this index:
-
-1. **Implementation and schema:** `Allura_Memory/src/`, `Allura_Memory/packages/`, PostgreSQL schema files, and active Compose configuration.
-2. **Canonical Memory decisions:** `Allura_Memory/docs/allura/RISKS-AND-DECISIONS.md`, especially AD-49 and AD-50, plus the current Allura Memory README.
-3. **Plugin package truth:** `allura-plugins/.claude-plugin/marketplace.json` and each package's `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`.
-4. **Ecosystem navigation:** this repository's `README.md` and this file.
-5. **Planning, archived, client, and operational notes:** useful as historical evidence, but not authoritative for current architecture or health.
-
-## Status and unresolved data
-
-This index makes no claim that any component is healthy, deployed, Production, release-ready, or at a numeric quality level. Establishing those states requires dated validation evidence from the owning repository or runtime.
-
-The following registry data still needs an authoritative owner and source:
-
-- repository ownership and current public/private visibility;
-- which sibling repositories are first-party Allura products;
-- release/synchronization relationships for the Team Durham and Team RAM Coding packages;
-- authorized client relationships and current integration/deployment state;
-- a canonical policy-ID registry, if numeric `POL-*` identifiers are still required.
+This index does not claim current deployment health, production readiness, client authorization, customer outcomes, or native runtime installation unless the owning runtime provides dated evidence. Those operational facts must be verified at the target system rather than inferred from repository visibility or a green source-repository CI run.
 
 ---
 
-*Repository audit date: 2026-08-15.*
+*Repository-model baseline updated: 2026-09-01.*

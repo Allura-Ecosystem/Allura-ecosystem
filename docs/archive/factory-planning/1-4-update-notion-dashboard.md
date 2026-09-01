@@ -50,7 +50,7 @@ The Notion dashboard (https://app.notion.com/p/Allura-ecosystem-e821d9be65b383e7
 
 The docker-mcp gateway is running at `http://localhost:8811/mcp` with:
 - Session ID: `RLCPWO63YYUICLLADHYFGSLB6K`
-- Auth token: `yjw4qni2kfj557hs51hvh5dzxg6hf2d8ac9i63lx89cvlxbs9u`
+- Auth token: `[REDACTED — historical token removed]`
 
 Tools available: `notion-fetch`, `notion-search`, `notion-create-pages`, `notion-update-page`, `notion-query-data-sources`.
 

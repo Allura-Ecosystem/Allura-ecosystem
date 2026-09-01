@@ -101,29 +101,47 @@ Implemented receipt shapes vary by operation and interface. Do not assume that e
 
 ## Ecosystem map
 
-Allura is organized as independent repositories with clear ownership boundaries.
+Allura is organized as independent public repositories with explicit source and distribution boundaries.
 
-| Repository | Responsibility | Start here |
+| Repository | Responsibility | Authority boundary |
 |---|---|---|
-| [Allura_Memory](https://github.com/Allura-Ecosystem/Allura_Memory) | Canonical Brain: memory API, PostgreSQL schema, RuVector adapter, curator, governance, audit | Install or integrate the memory service |
-| [Allura-ecosystem](https://github.com/Allura-Ecosystem/Allura-ecosystem) | Organization map, shared doctrine, topology, and navigation | Understand how the parts fit together |
-| [allura-plugins](https://github.com/Allura-Ecosystem/allura-plugins) | Claude/Codex plugin catalog and model-governance registry | Review Allura Cowork, Team Durham, and Team RAM Coding packages |
-| [allura-team-ram](https://github.com/Allura-Ecosystem/allura-team-ram) | Full Brooks-led engineering harness | Review the standalone engineering workflow; package synchronization remains to be reconciled |
-| [.github](https://github.com/Allura-Ecosystem/.github) | Organization profile and community files | Organization-wide contribution metadata |
+| [Allura_Memory](https://github.com/Allura-Ecosystem/Allura_Memory) | Governed memory and control plane: MCP/API, PostgreSQL schema and graph tables, RuVector adapter, curator, policy, audit | Canonical memory implementation |
+| [allura-team-ram](https://github.com/Allura-Ecosystem/allura-team-ram) | Standalone Team RAM software-delivery harness for OpenCode, Claude Code, and Codex | Canonical Team RAM source; catalog alias is `team-ram-coding` |
+| [team-durham](https://github.com/Allura-Ecosystem/team-durham) | Brand-production system with 12 canonical roles plus the `openagent` compatibility fallback | Canonical Team Durham source; catalog alias is `team-durham` |
+| [mortagate](https://github.com/Allura-Ecosystem/mortagate) | Human-supervised mortgage evidence review for Microsoft Copilot Cowork | Canonical Mortgate product source; Salesforce/Veridact files are historical |
+| [allura-plugins](https://github.com/Allura-Ecosystem/allura-plugins) | Distribution catalog, runtime manifests, model policy, and release validation | Pinned generated exports are downstream and non-authoritative |
+| [.github](https://github.com/Allura-Ecosystem/.github) | Organization profile and community metadata | Maps the public repository surfaces |
+| [Allura-ecosystem](https://github.com/Allura-Ecosystem/Allura-ecosystem) | Organization map, shared doctrine, topology, and navigation | This public index; no sibling product code is duplicated here |
 
-The detailed inventory, sibling-checkout boundaries, unresolved product relationships, and client evidence live in [ECOSYSTEM.md](ECOSYSTEM.md). Repository code and canonical ADRs outrank status prose if they disagree.
+```mermaid
+flowchart LR
+    Memory["Allura_Memory\ngoverned memory/control plane"]
+    RAM["allura-team-ram\ncanonical source"] -->|validated pinned export| Catalog["allura-plugins\ndistribution catalog"]
+    Durham["team-durham\ncanonical source"] -->|validated pinned export| Catalog
+    Mortgate["mortagate\ncanonical product"] --> Microsoft["Microsoft Copilot Cowork"]
+    Mortgate -.->|future allowlisted export| Catalog
+    Catalog --> Claude["Claude packages"]
+    Catalog --> Codex["Codex packages"]
+    Catalog --> Hermes["Hermes provider"]
+    Claude --> Memory
+    Codex --> Memory
+    Hermes --> Memory
+```
 
-## Plugins and agent teams
+The source flow is **standalone repository → validated export → commit-pinned catalog copy**. Fixes go back to the standalone owner before regeneration; generated catalog copies never become a second editable authority. The detailed provenance, verified commit baselines, runtime distinctions, and historical boundaries live in [ECOSYSTEM.md](ECOSYSTEM.md).
 
-The plugin layer packages governed operating workflows for different kinds of work:
+## Runtime packages, teams, and products
 
-| Plugin | Primary job | Default route |
+These surfaces are related but not interchangeable:
+
+| Surface | Runtime and primary job | Authority |
 |---|---|---|
-| **Allura Cowork** | Coordinate Claude and Codex with honest runtime attribution and validated handoffs | Hydrate → route → hand off → validate → close |
-| **Team Durham** | Brand strategy, visual systems, production, accessibility, and QA | Strategy → direction → production → audit |
-| **Team RAM Coding** | Brooks-led architecture, recon, implementation, review, and validation | Brooks → Scout → skills → build → validate → log |
+| **Allura Cowork** | Claude/Codex coordination with honest runtime attribution and validated handoffs | Catalog-owned `allura-cowork` package |
+| **Team Durham** | Portable brand strategy, visual systems, production, accessibility, and QA | Standalone `team-durham`; generated catalog alias `team-durham` |
+| **Team RAM** | Portable software delivery: architecture, recon, implementation, review, and validation | Standalone `allura-team-ram`; generated catalog alias `team-ram-coding` |
+| **Mortgate Evidence Review** | Microsoft Copilot Cowork skills for human-supervised mortgage evidence review | Standalone `mortagate`; not a Claude/Codex package |
 
-Plugins extend the operating surface; they do not bypass Allura Memory governance. See the [allura-plugins README](https://github.com/Allura-Ecosystem/allura-plugins) for manifests, installation, validation, and model routing.
+Packages and products do not bypass Allura Memory governance. A manifest, export, model alias, or prepared handoff is not proof that another runtime installed, loaded, or executed it. See the [allura-plugins README](https://github.com/Allura-Ecosystem/allura-plugins) for catalog installation and [ECOSYSTEM.md](ECOSYSTEM.md) for source ownership.
 
 ## Governance
 
@@ -157,7 +175,7 @@ git clone https://github.com/Allura-Ecosystem/Allura_Memory.git
 cd Allura_Memory
 cp .env.example .env
 # Fill the required secrets and database values before starting.
-docker compose up -d
+docker compose --env-file .env --env-file .env.local up -d
 curl http://localhost:6477/ready
 ```
 
