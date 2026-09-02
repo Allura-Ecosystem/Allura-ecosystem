@@ -21,8 +21,8 @@
 ---
 
 <p align="center">
-  <a href="docs/images/infographic-ecosystem-at-a-glance-v5.png"><img src="docs/images/infographic-ecosystem-at-a-glance-v5.png" alt="Allura ecosystem map centered on Allura Memory, also called Allura Brain, with Allura Cowork, Team Durham, Team RAM Coding, unconnected Claude and Codex runtime surfaces, and the governed evidence-to-knowledge flow" width="900" /></a><br/>
-  <sub><a href="docs/images/infographic-ecosystem-at-a-glance-v5.png">Open the full-size infographic</a></sub>
+  <a href="docs/images/framework-and-harness.png"><img src="docs/images/framework-and-harness.png" alt="Allura framework showing governed memory, controlled workflows, MCP tools, evidence, and evaluation around a PostgreSQL foundation" width="900" /></a><br/>
+  <sub><a href="docs/images/framework-and-harness.png">Open the full-size ecosystem overview</a></sub>
 </p>
 
 ## What Allura is
@@ -63,6 +63,10 @@ Allura keeps six responsibilities distinct:
 5. **Retrieval layer** — agents request tenant-scoped context through governed modes; approved-only retrieval is available, while other modes may include episodic evidence.
 6. **Policy/API layer** — identity, `group_id`, authorization, audit metadata, and failure behavior are enforced at the boundary.
 
+<p align="center">
+  <a href="docs/images/agent-runtime-request-flow.png"><img src="docs/images/agent-runtime-request-flow.png" alt="A controlled Allura request flow from intent through workflow, tools and memory, response, evidence, and evaluation" width="900" /></a>
+</p>
+
 ```text
 Agent action
     ↓
@@ -86,6 +90,10 @@ Scoped retrieval + provenance
 
 Neo4j was sunset as an active dependency under AD-50. Some compatibility code and historical documentation may remain, but new architecture and operator guidance should target the PostgreSQL/RuVector path.
 
+<p align="center">
+  <a href="docs/images/persistent-agent-memory.png"><img src="docs/images/persistent-agent-memory.png" alt="Allura persistent agent memory architecture with episodic evidence and canonical graph tables inside one PostgreSQL engine" width="900" /></a>
+</p>
+
 ## The memory receipt
 
 A retrieval result is more useful when its origin is visible. An Allura receipt can include:
@@ -102,6 +110,10 @@ A retrieval result is more useful when its origin is visible. An Allura receipt 
 The receipt does not make a claim true by itself. It makes the claim inspectable.
 
 Implemented receipt shapes vary by operation and interface. Do not assume that every mutation or retrieval returns one unified receipt.
+
+<p align="center">
+  <a href="docs/images/an-answer-can-show-its-work.png"><img src="docs/images/an-answer-can-show-its-work.png" alt="An Allura answer linked to source evidence, approved memory, and decision records, with provenance, citations, and review trail" width="900" /></a>
+</p>
 
 ## Ecosystem map
 
@@ -166,7 +178,19 @@ Six invariant families define the expected boundary behavior:
 
 Governance is fail-visible: callers receive status, warnings, and audit evidence instead of a silent success claim.
 
+<p align="center">
+  <a href="docs/images/governance-is-part-of-the-flow.jpg"><img src="docs/images/governance-is-part-of-the-flow.jpg" alt="Governance built into the agent workflow through policy enforcement, human approval, tenant controls, append-only audit, and evidence lineage" width="900" /></a>
+</p>
+
 These lowercase governance-registry IDs are distinct from uppercase kernel `POL-*` controls and RuVix `RULE-*` identifiers. Bare references such as “Policy 4” are ambiguous.
+
+### History stays inspectable
+
+Canonical memory is versioned rather than silently rewritten. New knowledge supersedes earlier versions while the supporting evidence and lineage remain available for inspection.
+
+<p align="center">
+  <a href="docs/images/memory-keeps-its-history.png"><img src="docs/images/memory-keeps-its-history.png" alt="Three memory versions connected by supersession, showing append-only evidence, versioned memory, and traceable change" width="900" /></a>
+</p>
 
 ## Quick start
 
@@ -227,17 +251,9 @@ From a sibling `allura-plugins` checkout, use `bash allura-plugins/scripts/plugi
 
 ## Brand system
 
-The README visuals follow the canonical Allura identity:
+The README visuals use the canonical Allura system: **Deep Navy `#1A2B4A`** for trust and structure, **Coral `#E85A3C`** for human decision points, **Trust Green `#4CAF50`** for approved flow, **Clarity Blue `#5B8DB8`** for calm information, and a **Pure White `#F5F5F5`** canvas. The real Allura wordmark is used without reconstruction.
 
-- **Allura Blue `#0D47A1`** — memory and intelligence
-- **Allura Orange `#FF4D1F`** — clarity and human decision points
-- **Allura Green `#14BA4B`** — connection and approved flow
-- **Allura Ink `#0F1720`** — technical foundation
-- **Allura Cream `#F7F3EE`** — calm, readable canvas
-- **Aeonik** — display, heading, and body typography
-- **IBM Plex Mono** — interface code, identifiers, and technical samples
-
-Brand assets should communicate the architecture without substituting decoration for evidence.
+Visuals communicate architecture, provenance, and governance; they do not substitute decoration for evidence.
 
 ## License
 
