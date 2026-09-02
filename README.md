@@ -50,6 +50,10 @@ Allura is the ecosystem built around that problem. Its center is **Allura Memory
 
 ## How it works
 
+<p align="center">
+  <a href="docs/images/allura-memory-architecture.png"><img src="docs/images/allura-memory-architecture.png" alt="Persistent Allura memory architecture connecting conversations and events to episodic evidence, canonical graph tables, trusted context, and governed retrieval." width="900" /></a>
+</p>
+
 Allura keeps six responsibilities distinct:
 
 1. **Raw traces** — agent events are written to PostgreSQL as append-only evidence.
@@ -144,6 +148,10 @@ These surfaces are related but not interchangeable:
 Packages and products do not bypass Allura Memory governance. A manifest, export, model alias, or prepared handoff is not proof that another runtime installed, loaded, or executed it. See the [allura-plugins README](https://github.com/Allura-Ecosystem/allura-plugins) for catalog installation and [ECOSYSTEM.md](ECOSYSTEM.md) for source ownership.
 
 ## Governance
+
+<p align="center">
+  <a href="docs/images/infographic-memory-receipt.png"><img src="docs/images/infographic-memory-receipt.png" alt="An Allura memory receipt keeps evidence lineage, semantic relationships, governed retrieval, and tenant-aware context visible." width="900" /></a>
+</p>
 
 Six invariant families define the expected boundary behavior:
 
