@@ -67,6 +67,10 @@ Allura keeps six responsibilities distinct:
   <a href="docs/images/agent-runtime-request-flow.png"><img src="docs/images/agent-runtime-request-flow.png" alt="A controlled Allura request flow from intent through workflow, tools and memory, response, evidence, and evaluation" width="900" /></a>
 </p>
 
+<p align="center">
+  <a href="docs/images/test-before-release.png"><img src="docs/images/test-before-release.png" alt="Allura evaluates behavior before release: changes are tested and measured, and a successful response is not treated as proof the work is correct" width="900" /></a>
+</p>
+
 ```text
 Agent action
     ↓
@@ -92,6 +96,10 @@ Neo4j was sunset as an active dependency under AD-50. Some compatibility code an
 
 <p align="center">
   <a href="docs/images/persistent-agent-memory.png"><img src="docs/images/persistent-agent-memory.png" alt="Allura persistent agent memory architecture with episodic evidence and canonical graph tables inside one PostgreSQL engine" width="900" /></a>
+</p>
+
+<p align="center">
+  <a href="docs/images/ad50-canonical-graph-migration.png"><img src="docs/images/ad50-canonical-graph-migration.png" alt="AD-50 migration of the canonical graph from Neo4j to PostgreSQL graph tables through the RuVector adapter, preserving memories and relationships" width="900" /></a>
 </p>
 
 ## The memory receipt
@@ -162,6 +170,10 @@ Packages and products do not bypass Allura Memory governance. A manifest, export
 ## Governance
 
 <p align="center">
+  <a href="docs/images/enterprise-governance-safety.png"><img src="docs/images/enterprise-governance-safety.png" alt="Enterprise governance and safety around Allura Memory: policy enforcement, tenant isolation, human approval, and append-only audit" width="900" /></a>
+</p>
+
+<p align="center">
   <a href="docs/images/infographic-memory-receipt.png"><img src="docs/images/infographic-memory-receipt.png" alt="An Allura memory receipt keeps evidence lineage, semantic relationships, governed retrieval, and tenant-aware context visible." width="900" /></a>
 </p>
 
@@ -177,6 +189,18 @@ Six invariant families define the expected boundary behavior:
 | `pol-006` | Tenant namespaces follow the `allura-*` contract and legacy namespaces are treated as drift. |
 
 Governance is fail-visible: callers receive status, warnings, and audit evidence instead of a silent success claim.
+
+<p align="center">
+  <a href="docs/images/access-has-boundaries.png"><img src="docs/images/access-has-boundaries.png" alt="Tenant-scoped access boundaries in Allura: every operation carries a valid group_id and legacy namespaces are treated as drift" width="900" /></a>
+</p>
+
+<p align="center">
+  <a href="docs/images/every-action-leaves-proof.png"><img src="docs/images/every-action-leaves-proof.png" alt="Append-only evidence in Allura: every agent action is written as an inspectable, immutable audit trace" width="900" /></a>
+</p>
+
+<p align="center">
+  <a href="docs/images/people-review-important-changes.png"><img src="docs/images/people-review-important-changes.png" alt="Human-in-the-loop promotion in Allura: people review and approve important canonical memory changes before they become trusted" width="900" /></a>
+</p>
 
 <p align="center">
   <a href="docs/images/governance-is-part-of-the-flow.jpg"><img src="docs/images/governance-is-part-of-the-flow.jpg" alt="Governance built into the agent workflow through policy enforcement, human approval, tenant controls, append-only audit, and evidence lineage" width="900" /></a>
