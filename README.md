@@ -89,6 +89,33 @@ Memory doesn't rewrite itself. New versions **supersede** old ones — the old s
 
 ---
 
+## Security and governance
+
+<p align="center">
+  <a href="docs/images/enterprise-governance-safety.png"><img src="docs/images/enterprise-governance-safety.png" alt="Enterprise governance and safety architecture: policy hooks, human approval, and append-only audit evidence surrounding the agent workflow, leading to queued or authorized materialization" width="900" /></a>
+</p>
+
+Governance is not a layer bolted on after the fact — it wraps the agent workflow itself. **Policy hooks** apply rules as code before an action is taken, **human review** gates decisions that carry weight, and **append-only audit evidence** captures every decision and outcome. Nothing materializes without passing the gate: work is either **queued** for review or **authorized** to proceed.
+
+### The controls
+
+| Control | How it is enforced |
+|---|---|
+| **Tenant isolation** | Every read and write carries a valid `group_id` (`allura-*`). PostgreSQL Row-Level Security enforces the boundary at the database, not just the application. |
+| **Policy gate** | `governance_check_gate` validates the action, tenant, and actor before a mutation is accepted. Invalid tenants and missing actions are rejected outright. |
+| **Human-in-the-loop** | Promotion to canonical memory routes through curator approval. Automated scoring proposes; it never silently declares truth. |
+| **Append-only evidence** | Event and trace rows are never updated or deleted. Corrections create a new version with a `SUPERSEDES` edge, preserving the original. |
+| **Edge access** | External access to the gateway runs through a Cloudflare tunnel with layered authentication. The service is not exposed directly. |
+| **Gateway auth** | MCP gateway requires token authentication, with documented key-rotation and break-glass procedures. |
+
+### The threat model
+
+Allura's [threat model](https://github.com/Allura-Ecosystem/Allura_Memory/blob/main/docs/enterprise/threat-model.md) is explicit about what it defends against — including **prompt and tool injection**, **memory poisoning**, **cross-tenant access**, **role forgery**, **evidence tampering**, and **replay abuse**. Retrieved memory and external content are treated as evidence, never as instructions.
+
+Hardening procedures — RLS policies, connection security, token and password rotation, backup and restore, retention and deletion, and break-glass access — are documented in the [hardening guide](https://github.com/Allura-Ecosystem/Allura_Memory/blob/main/docs/enterprise/hardening.md).
+
+---
+
 ## Ecosystem
 
 Allura is organized as independent public repositories with explicit source and distribution boundaries.
