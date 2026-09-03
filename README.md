@@ -48,6 +48,62 @@ Allura is the ecosystem built around that problem. Its center is **Allura Memory
 - It does not silently rewrite history; updates create a superseding version and preserve prior evidence.
 - It does not treat a successful agent response as proof that the underlying work is correct.
 
+## The ecosystem, step by step
+
+Here's how the system comes together — from the core memory architecture, through the runtime flow, to the safety and trust guarantees that make Allura production-ready.
+
+### 1. One system, five pillars
+
+<p align="center">
+  <a href="docs/images/framework-and-harness.png"><img src="docs/images/framework-and-harness.png" alt="Allura Agentic AI Framework & Harness: governed memory, controlled workflows, MCP tools, evidence evaluation, and repeatability around a PostgreSQL foundation" width="900" /></a>
+</p>
+
+Allura is built around one PostgreSQL engine holding **governed memory** (evidence + semantic knowledge), **controlled workflows** (clear intent, guardrails, safe execution), **MCP tools** (integration with Claude, Codex, specialist runtimes), **evidence + evaluation** (traceable sources and repeatability), and **persistent context** (curated memory that evolves while preserving relationships).
+
+### 2. The core: PostgreSQL, two logical layers
+
+<p align="center">
+  <a href="docs/images/persistent-agent-memory.png"><img src="docs/images/persistent-agent-memory.png" alt="Persistent agent memory architecture: one PostgreSQL engine with episodic evidence and canonical graph tables, governed retrieval + materialization, evidence lineage, persistent context, and tenant-aware controls" width="900" /></a>
+</p>
+
+Inside one PostgreSQL engine live two distinct layers: **episodic evidence** (raw interactions, observations, and events stored as verifiable records) and **canonical graph tables** (entities, relationships, and facts structured for semantic understanding). Conversations and events flow in → trusted context flows out, with governed access and tenant-aware controls that ensure every insight links back to its source.
+
+### 3. How a request flows through it
+
+<p align="center">
+  <a href="docs/images/agent-runtime-request-flow.png"><img src="docs/images/agent-runtime-request-flow.png" alt="One request through the Allura agent runtime: from request through intent, workflow, tools+memory, response, to connected result, wrapped in policy and checkpoints, designed to be repeatable" width="900" /></a>
+</p>
+
+Every request follows a controlled path: understand the **intent**, orchestrate the **workflow**, use the right **tools and memory**, deliver an evidence-backed **response**, and return a **connected result** — all governed by policy checkpoints and designed to be repeatable. Quality checks happen at every step.
+
+### 4. Answers ground in approved context
+
+<p align="center">
+  <a href="docs/images/an-answer-can-show-its-work.png"><img src="docs/images/an-answer-can-show-its-work.png" alt="An answer can show its work: the response is grounded and ready to use, linked to its source evidence, approved memory, and decision record, with provenance, citations, and review trail" width="900" /></a>
+</p>
+
+A good answer doesn't just provide a response — it shows where that answer came from. Every Allura result carries **provenance** (who recorded it), **citations** (where the information came from), and a **review trail** (why this answer was chosen). Transparency builds trust.
+
+### 5. Humans review before truth is written
+
+<p align="center">
+  <a href="docs/images/people-review-important-changes.png"><img src="docs/images/people-review-important-changes.png" alt="People review important changes: canonical memory requires accountable approval. A change is proposed with context and source, policy validates against rules, a person reviews accuracy and impact, then approved and queued for application" width="900" /></a>
+</p>
+
+Before something becomes canonical truth in Allura's memory, a human reviews it. **Proposal** → **policy check** → **human review** → **approved and queued**. This HITL gate ensures that durable knowledge is not written autonomously, and that every change carries recorded rationale.
+
+### 6. Everything stays traceable forever
+
+<p align="center">
+  <a href="docs/images/memory-keeps-its-history.png"><img src="docs/images/memory-keeps-its-history.png" alt="Memory keeps its history: new versions supersede old ones without erasing evidence. Version 1 (historical) supersedes to Version 2 (historical with recorded changes) supersedes to Version 3 (current). Every version built on verified history, with append-only evidence, versioned memory, and traceable change." width="900" /></a>
+</p>
+
+Memory doesn't rewrite itself. New versions **supersede** old ones — the old stays visible and traceable. **Version 1** is preserved, **version 2** records what changed and why, **version 3** is current but built on verified history. Append-only evidence and immutable versioning mean every update is auditable and nothing is ever silently forgotten.
+
+---
+
+**The full story:** Allura is one PostgreSQL engine holding governed memory (episodic evidence + canonical graph tables). Requests flow through controlled workflows, answers ground in approved context, humans review changes before they become truth, and every version stays traceable forever.
+
 ## How it works
 
 <p align="center">
